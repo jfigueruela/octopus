@@ -1,0 +1,27 @@
+{
+  "name": "Octopus",
+  "authors": [
+    "jfigueruela <jfigueruela@gmail.com>"
+  ],
+  "description": "Main dashboard web application",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "^2.2.0",
+    "angular": "angularjs#^1.5.7",
+    "requirejs-text": "2.0.14",
+    "angular-ui-router": "ui-router#^0.3.1",
+    "angular-animate": "^1.5.7",
+    "angular-sanitize": "^1.5.7",
+    "d3": "^3.5.17",
+    "angularjs-nvd3-directives": "^0.0.7"
+  }
+}
