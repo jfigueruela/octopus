@@ -6,7 +6,8 @@ www/css
 www/lib/
 dist/
 npm-debug.log
-#Eclipse project files
+#Eclipse IDE files
 .settings
 .project
-
+#Netbeans IDE files.
+/nbproject

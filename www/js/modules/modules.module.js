@@ -1,20 +1,20 @@
 /**
  * Widgets module AngularJS configuration.
- * 
+ *
  * @param {type} angular
  * @returns {angular.module}
  * @author Jose Figueruela <jfigueruela@gmail.com>
- * @since
+ * @since v0.0.1 20160617
  */
 
-(function() {
-  
+(function () {
+
   define([
     'angular'
-  ], function(ng) {
+  ], function (ng) {
     'use strict';
     return ng.module('app.modules', [
-        'app.module.d3', 'app.module.home'
+      'app.module.d3', 'app.module.home'
     ]);
   });
 })();

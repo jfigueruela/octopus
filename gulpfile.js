@@ -96,10 +96,10 @@ gulp.task('minimize', function() {
  * Start Dev Server.
  */
 gulp.task('serve', [
-  'sass:watch'
+    'sass:watch'
 ], function() {
   browserSync.init([
-      './www/css/*.css', './www/js/*.js', './www/**/*.html'
+      './www/css/*.css', './www/**/*.js'
   ], {
     server : {
       baseDir : "www",

@@ -1,30 +1,28 @@
 /**
  * Home controller.
- * 
+ *
  * @param {type} angular
  * @author Jose Figueruela <jfigueruela@gmail.com>
+ * @since v0.0.1 20160617
  */
 
-(function() {
+(function () {
   define([
     './home.module'
-  ], function(moduleName) {
+  ], function (moduleName) {
     'use strict';
-    
+
     angular.module(moduleName).controller('HomeController', HomeController);
-    
+
     /* @ngInject */
-    function HomeController($scope,$log) {
+    function HomeController($scope, $log, HomeFactory, D3Factory) {
       var vm = this;
-      
-      // Controller attributes
-      vm.name = d3.version;
-      // Public methods
-      vm.sayHello = sayHello;
-      
-      function sayHello(name) {
-        console.log("Hello: " + name + " to " + vm.name);
+      activate();
+      function activate() {
+        console.log(HomeFactory.getWorkflowInput())
+        console.log(HomeFactory.getTransactions());
       }
+
     }
   });
 })();
