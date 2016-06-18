@@ -284,7 +284,7 @@
             {"key": 6, "loc": "175 440", "text": "Sprinkle nuts on top"},
             {"key": 7, "loc": "175 500", "text": "Bake for 25 minutes and let cool"},
             {"key": 8, "loc": "175 570", "text": "Cut into rectangular grid"},
-            {"key": -2, "category": "End", "loc": "175 640", "text": "Enjoy!"}
+            {"key": -2, "category": "End", "loc": "175 640", "text": "End"}
           ],
           "linkDataArray": [
             {"from": 1, "to": 2, "fromPort": "B", "toPort": "T"},
@@ -301,7 +301,8 @@
             {"from": 0, "to": 4, "fromPort": "B", "toPort": "T"}
           ]}
 
-        myDiagram.model = go.Model.fromJson(inputJSONData);
+        var parsedJSONInputData = parseJSON(inputJSONData);
+        myDiagram.model = go.Model.fromJson(parsedJSONInputData);
       }
 
 
@@ -318,16 +319,23 @@
 
 
       // add an SVG rendering of the diagram at the end of this page
-      function makeSVG() {
-        var svg = myDiagram.makeSvg({
-          scale: 0.5
-        });
-        svg.style.border = "1px solid black";
-        obj = document.getElementById("SVGArea");
-        obj.appendChild(svg);
-        if (obj.children.length > 0) {
-          obj.replaceChild(svg, obj.children[0]);
-        }
+//      function makeSVG() {
+//        var svg = myDiagram.makeSvg({
+//          scale: 0.5
+//        });
+//        svg.style.border = "1px solid black";
+//        obj = document.getElementById("SVGArea");
+//        obj.appendChild(svg);
+//        if (obj.children.length > 0) {
+//          obj.replaceChild(svg, obj.children[0]);
+//        }
+//      }
+      /**
+       * Adapt intput JSON workflow to GoJS data format.
+       * @returns {undefined}
+       */
+      function parseJSON(inputData) {
+
       }
       return factory;
     }

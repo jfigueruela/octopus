@@ -15,10 +15,27 @@
     angular.module(moduleName).controller('HomeController', HomeController);
 
     /* @ngInject */
-    function HomeController($scope, $log, HomeFactory, GoFactory, JsonParserFactory) {
+    function HomeController(HomeFactory, GoFactory) {
       var vm = this;
-      GoFactory.init("myDiagramDiv");
-      GoFactory.load();
+      vm.diagramDivId = "myDiagramDiv";
+      vm.loadWorkFlow = loadWorkFlow;
+
+      activate();
+      /**
+       * Controller activation.
+       * @returns {undefined}
+       */
+      function activate() {
+        GoFactory.init(vm.diagramDivId);
+      }
+
+      /**
+       * Load workflow action.
+       * @returns {undefined}
+       */
+      function loadWorkFlow() {
+        GoFactory.load(HomeFactory.getWorkflowInput());
+      }
     }
   });
 })();
