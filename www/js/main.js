@@ -14,7 +14,8 @@
     'uiRouter': '../lib/angular-ui-router/release/angular-ui-router',
     'text': '../lib/requirejs-text/text',
     'd3': '../lib/d3/d3.min',
-    'ngD3plus': '../lib/d3plus/d3plus.min'
+    'ngD3plus': '../lib/d3plus/d3plus.min',
+    'gojs': '../lib/gojs/release/go'
   }
 
   require.config({

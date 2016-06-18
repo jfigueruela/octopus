@@ -1,5 +1,5 @@
 /**
- * Core module AngularJS configuration.
+ * D3 Angular Octopus core Module
  *
  * @param {type} angular
  * @returns {angular.module}
@@ -13,11 +13,10 @@
     'angular'
   ], function (ng) {
     'use strict';
-    return ng.module('app.core',
-      [
-        'app.module.d3',
-        'app.core.jsonParser',
-        'app.core.go666'
-      ]);
+
+    var moduleName = 'app.module.go';
+    ng.module(moduleName, []);
+
+    return moduleName;
   });
 })();

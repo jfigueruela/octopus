@@ -23,6 +23,7 @@
     "angular-sanitize": "^1.5.7",
     "d3": "^3.5.17",
     "angularjs-nvd3-directives": "^0.0.7",
-    "angular-d3plus": "*"
+    "angular-d3plus": "*",
+    "gojs": "^1.6.9"
   }
 }

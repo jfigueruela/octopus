@@ -1,19 +1,14 @@
 /**
- * Core module RequireJS configuration.
- *
+ * D3 RequireJs file dependencies.
  * @param {type} angular
  * @author Jose Figueruela <jfigueruela@gmail.com>
- * @@since v0.0.1 20160617
+ * @since v0.0.1 20160617
  */
 
 (function () {
   define([
     // Here files modules internal files referencies.
-    // Widgets module instance itself.
-    './core.module',
-    './d3/main',
-    './json-parser/main',
-    './go/main'
+    './go.factory'
   ], function () {
   });
 })();
