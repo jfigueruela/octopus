@@ -14,7 +14,7 @@
   ], function (ng) {
     'use strict';
     return ng.module('app.modules', [
-      'app.module.d3', 'app.module.home'
+      'app.module.home'
     ]);
   });
 })();

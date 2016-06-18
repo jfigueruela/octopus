@@ -14,7 +14,7 @@
     'uiRouter': '../lib/angular-ui-router/release/angular-ui-router',
     'text': '../lib/requirejs-text/text',
     'd3': '../lib/d3/d3.min',
-    'angularjs-nvd3-directives': '../lib/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.min'
+    'ngD3plus': '../lib/d3plus/d3plus.min'
   }
 
   require.config({
@@ -31,11 +31,10 @@
       ],
       uiRouter: [
         'angular'
+      ],
+      ngD3plus: [
+        'angular'
       ]
-        // ,
-        // d3 : [
-        // 'angular'
-        // ],
     },
     priority: [
       'angular'

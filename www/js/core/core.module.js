@@ -1,5 +1,5 @@
 /**
- * Home Angular module
+ * Core module AngularJS configuration.
  *
  * @param {type} angular
  * @returns {angular.module}
@@ -10,13 +10,13 @@
 (function () {
 
   define([
-    'angular',
+    'angular'
   ], function (ng) {
     'use strict';
-
-    var moduleName = 'app.module.home';
-    ng.module(moduleName, []);
-
-    return moduleName;
+    return ng.module('app.core',
+      [
+        'app.module.d3',
+        'app.core.jsonParser'
+      ]);
   });
 })();

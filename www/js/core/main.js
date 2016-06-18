@@ -1,5 +1,5 @@
 /**
- * Widgets module RequireJS configuration.
+ * Core module RequireJS configuration.
  *
  * @param {type} angular
  * @author Jose Figueruela <jfigueruela@gmail.com>
@@ -10,8 +10,9 @@
   define([
     // Here files modules internal files referencies.
     // Widgets module instance itself.
-    './modules.module',
-    './home/main'
+    './core.module',
+    './d3/main',
+    './json-parser/main'
   ], function () {
   });
 })();

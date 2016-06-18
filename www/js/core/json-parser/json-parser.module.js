@@ -1,5 +1,5 @@
 /**
- * Home Angular module
+ * JSON Parser module AngularJS configuration.
  *
  * @param {type} angular
  * @returns {angular.module}
@@ -10,11 +10,11 @@
 (function () {
 
   define([
-    'angular',
+    'angular'
   ], function (ng) {
     'use strict';
 
-    var moduleName = 'app.module.home';
+    var moduleName = 'app.core.jsonParser';
     ng.module(moduleName, []);
 
     return moduleName;

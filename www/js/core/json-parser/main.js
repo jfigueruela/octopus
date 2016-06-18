@@ -1,5 +1,5 @@
 /**
- * Widgets module RequireJS configuration.
+ * JSON Parser module RequireJS configuration.
  *
  * @param {type} angular
  * @author Jose Figueruela <jfigueruela@gmail.com>
@@ -9,9 +9,7 @@
 (function () {
   define([
     // Here files modules internal files referencies.
-    // Widgets module instance itself.
-    './modules.module',
-    './home/main'
+    './json-parser.factory'
   ], function () {
   });
 })();

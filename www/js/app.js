@@ -8,14 +8,19 @@
  */
 (function () {
   define([
-    'angular', 'uiRouter', 'ngSanitize', 'ngAnimate', 'd3',
+    'angular', 'uiRouter', 'ngSanitize', 'ngAnimate', 'd3', 'ngD3plus',
     // Here application modules index files references for RequireJS.
-    './modules/main'
+    './modules/main',
+    './core/main'
 
-  ], function (angular, ngCordova) {
+  ], function (angular) {
     'use strict';
     var overlookApp = angular.module('app', [
-      'ui.router', 'ngSanitize', 'ngAnimate', 'app.modules'
+      'ui.router',
+      'ngSanitize',
+      'ngAnimate',
+      'app.modules',
+      'app.core'
 
     ]);
     overlookApp.config(config);

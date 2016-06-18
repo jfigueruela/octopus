@@ -28,26 +28,13 @@
         // TODO @jfigueruela: here future backend service connection.
         var mockWorkflow = {
           "containers": [
-            "b1", "b2", "b3", "b4", "d1"
+            "b1", "b2", "d1", "b3", "b4",
           ],
           "connections": [
-            [
-              "start", "b1"
-            ], [
-              "b1", "b2"
-            ], [
-              "b2", "d1"
-            ], [
-              "d1", "b3"
-            ], [
-              "d1", "b4"
-            ], [
-              "b3", "end"
-            ], [
-              "b4", "end"
-            ]
+            ["start", "b1"], ["b1", "b2"], ["b2", "d1"], ["d1", "b3"], ["d1", "b4"], ["b3", "end"], ["b4", "end"]
           ]
         }
+
         return mockWorkflow;
       }
 
