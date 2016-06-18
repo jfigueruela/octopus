@@ -29,7 +29,7 @@
           connections: []
         };
 
-        result.data.push({"name": "start", "size": 20});
+        result.data.push({"name": "start", "size": 0});
         angular.forEach(workflow.containers, function (container, i) {
           result.data.push({'name': container, "size": 10});
         });
@@ -45,7 +45,6 @@
           result.connections.push({'source': connector[0], 'target': connector[1]});
         });
 
-        console.log(result)
         return result;
       }
 
