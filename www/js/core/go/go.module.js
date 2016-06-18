@@ -14,7 +14,7 @@
   ], function (ng) {
     'use strict';
 
-    var moduleName = 'app.module.go';
+    var moduleName = 'app.core.go';
     ng.module(moduleName, []);
 
     return moduleName;

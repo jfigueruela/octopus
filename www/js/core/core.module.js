@@ -17,7 +17,7 @@
       [
         'app.module.d3',
         'app.core.jsonParser',
-        'app.core.go666'
+        'app.core.go'
       ]);
   });
 })();
