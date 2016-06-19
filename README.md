@@ -2,9 +2,28 @@
 
 GoJS Lib. Integration
 
+# Installation Guide
+Installation of technologies pre-required for setting.
+
+![](https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash2/v/t1.0-1/p50x50/10806209_311541739041869_8711130430212920889_n.png?oh=41b75b5ab977affa3fe31fa7c8d9e703&oe=5699934F&__gda__=1453174966_3fdb471258f3a66d81567ff331553ac6)
+### NodeJS - NPM
 ```
-  $bower i && npm i
-  $gulp serve
+$ curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
+```
+
+![![](https://pbs.twimg.com/profile_images/3536632979/66db62603f426a8fc6664081811be6d4_normal.png)](https://pbs.twimg.com/profile_images/3536632979/66db62603f426a8fc6664081811be6d4_normal.png)
+### Bower
+```
+$ sudo npm install -g bower
+```
+### Instal dependencies
+```
+$ bower i && npm i
+```
+### Start server
+```
+$ gulp serve
 ```
 
 
