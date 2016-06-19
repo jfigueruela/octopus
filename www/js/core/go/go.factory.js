@@ -11,25 +11,23 @@
     './go.module'
   ], function (moduleName) {
     'use strict';
-
     angular.module(moduleName).factory('GoFactory', GoFactory);
-
     /* @ngInject */
     function GoFactory() {
 
       var factory = this;
       var myDiagram;
       factory.className = '[GoFactory]';
-
       factory.init = init;
       factory.load = load;
-
-
+      factory.exportWorkFlow = exportWorkFlow;
+      factory.renderTransactionInWorkFlow = renderTransactionInWorkFlow;
+      factory.tikaTest = tikaTest;
       function init(containerId) {
 
         if (window.goSamples)
-          goSamples();  // init for these samples -- you don't need to call this
-        var $ = go.GraphObject.make;  // for conciseness in defining templates
+          goSamples(); // init for these samples -- you don't need to call this
+        var $ = go.GraphObject.make; // for conciseness in defining templates
         myDiagram =
           $(go.Diagram, containerId, // must name or refer to the DIV HTML element
             {
@@ -37,10 +35,9 @@
               allowDrop: true, // must be true to accept drops from the Palette
               "LinkDrawn": showLinkLabel, // this DiagramEvent listener is defined below
               "LinkRelinked": showLinkLabel,
-              "animationManager.duration": 800, // slightly longer than default (600ms) animation
+              "animationManager.duration": 500, // slightly longer than default (600ms) animation
               "undoManager.isEnabled": true  // enable undo & redo
             });
-
         // when the document is modified, add a "*" to the title and enable the "Save" button
         myDiagram.addDiagramListener("Modified", function (e) {
           var button = document.getElementById("SaveButton");
@@ -60,7 +57,6 @@
                   idx);
           }
         });
-
         // helper definitions for node templates
 
         function nodeStyle() {
@@ -112,7 +108,6 @@
         // define the Node templates for regular nodes
 
         var lightText = 'whitesmoke';
-
         myDiagram.nodeTemplateMap.add("", // the default category
           $(go.Node, "Spot", nodeStyle(),
             // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
@@ -137,7 +132,6 @@
             makePort("R", go.Spot.Right, true, true),
             makePort("B", go.Spot.Bottom, true, false)
             ));
-
         myDiagram.nodeTemplateMap.add("Start",
           $(go.Node, "Spot", nodeStyle(),
             $(go.Panel, "Auto",
@@ -152,7 +146,6 @@
             makePort("R", go.Spot.Right, true, false),
             makePort("B", go.Spot.Bottom, true, false)
             ));
-
         myDiagram.nodeTemplateMap.add("End",
           $(go.Node, "Spot", nodeStyle(),
             $(go.Panel, "Auto",
@@ -167,7 +160,6 @@
             makePort("L", go.Spot.Left, false, true),
             makePort("R", go.Spot.Right, false, true)
             ));
-
         myDiagram.nodeTemplateMap.add("Comment",
           $(go.Node, "Auto", nodeStyle(),
             $(go.Shape, "File",
@@ -185,8 +177,6 @@
             new go.Binding("text").makeTwoWay())
             // no ports, because no links are allowed to connect with a comment
             ));
-
-
         // replace the default Link template in the linkTemplateMap
         myDiagram.linkTemplate =
           $(go.Link, // the whole link panel
@@ -232,7 +222,6 @@
               new go.Binding("text").makeTwoWay())
               )
             );
-
         // Make link labels visible if coming out of a "conditional" node.
         // This listener is called by the "LinkDrawn" and "LinkRelinked" DiagramEvents.
         function showLinkLabel(e) {
@@ -246,66 +235,90 @@
         // temporary links used by LinkingTool and RelinkingTool are also orthogonal:
         myDiagram.toolManager.linkingTool.temporaryLink.routing = go.Link.Orthogonal;
         myDiagram.toolManager.relinkingTool.temporaryLink.routing = go.Link.Orthogonal;
-
 //        load();  // load an initial diagram from some JSON text
 
         // initialize the Palette that is on the left side of the page
-        var myPalette =
-          $(go.Palette, "myPaletteDiv", // must name or refer to the DIV HTML element
-            {
-              "animationManager.duration": 800, // slightly longer than default (600ms) animation
-              nodeTemplateMap: myDiagram.nodeTemplateMap, // share the templates used by myDiagram
-              model: new go.GraphLinksModel([// specify the contents of the Palette
-                {category: "Start", text: "Start"},
-                {text: "Step"},
-                {text: "???", figure: "Diamond"},
-                {category: "End", text: "End"},
-                {category: "Comment", text: "Comment"}
-              ])
-            });
-
+        $(go.Palette, "myPaletteDiv", // must name or refer to the DIV HTML element
+          {
+            "animationManager.duration": 500, // slightly longer than default (600ms) animation
+            nodeTemplateMap: myDiagram.nodeTemplateMap, // share the templates used by myDiagram
+            model: new go.GraphLinksModel([// specify the contents of the Palette
+              {category: "Start", text: "Start"},
+              {text: "Step"},
+              {text: "???", figure: "Diamond"},
+              {category: "End", text: "End"},
+              {category: "Comment", text: "Comment"}
+            ])
+          });
       }
       function load(inputJSONData) {
-
-        inputJSONData = {
-          "class": "go.GraphLinksModel",
-          "linkFromPortIdProperty": "fromPort",
-          "linkToPortIdProperty": "toPort",
-          "nodeDataArray": [
-            {"category": "Comment", "loc": "360 -10", "text": "Kookie Brittle", "key": -13},
-            {"key": -1, "category": "Start", "loc": "175 0", "text": "Start"},
-            {"key": 0, "loc": "0 77", "text": "Preheat oven to 375 F"},
-            {"key": 1, "loc": "175 100",
-              "text": "In a bowl, blend: 1 cup margarine, 1.5 teaspoon vanilla, 1 teaspoon salt"},
-            {"key": 2, "loc": "175 190", "text": "Gradually beat in 1 cup sugar and 2 cups sifted flour"},
-            {"key": 3, "loc": "175 270", "text": "Mix in 6 oz (1 cup) Nestle's Semi-Sweet Chocolate Morsels"},
-            {"key": 4, "loc": "175 370", "text": "Press evenly into ungreased 15x10x1 pan"},
-            {"key": 5, "loc": "352 85", "text": "Finely chop 1/2 cup of your choice of nuts"},
-            {"key": 6, "loc": "175 440", "text": "Sprinkle nuts on top"},
-            {"key": 7, "loc": "175 500", "text": "Bake for 25 minutes and let cool"},
-            {"key": 8, "loc": "175 570", "text": "Cut into rectangular grid"},
-            {"key": -2, "category": "End", "loc": "175 640", "text": "End"}
-          ],
-          "linkDataArray": [
-            {"from": 1, "to": 2, "fromPort": "B", "toPort": "T"},
-            {"from": 2, "to": 3, "fromPort": "B", "toPort": "T"},
-            {"from": 3, "to": 4, "fromPort": "B", "toPort": "T"},
-            {"from": 4, "to": 6, "fromPort": "B", "toPort": "T"},
-            {"from": 6, "to": 7, "fromPort": "B", "toPort": "T"},
-            {"from": 7, "to": 8, "fromPort": "B", "toPort": "T"},
-            {"from": 8, "to": -2, "fromPort": "B", "toPort": "T"},
-            {"from": -1, "to": 0, "fromPort": "B", "toPort": "T"},
-            {"from": -1, "to": 1, "fromPort": "B", "toPort": "T"},
-            {"from": -1, "to": 5, "fromPort": "B", "toPort": "T"},
-            {"from": 5, "to": 4, "fromPort": "B", "toPort": "T"},
-            {"from": 0, "to": 4, "fromPort": "B", "toPort": "T"}
-          ]}
-
         var parsedJSONInputData = parseJSON(inputJSONData);
         myDiagram.model = go.Model.fromJson(parsedJSONInputData);
       }
 
+      function exportWorkFlow() {
+        return myDiagram.model.toJson();
+      }
 
+      function renderTransactionInWorkFlow(transaction) {
+        angular.forEach(transaction.steps, function (step) {
+          for (var it = myDiagram.nodes.iterator; it.next(); ) {
+            var node = it.value;
+            if (step.toLowerCase() === node.data.text.toLowerCase()) {
+              console.log(node)
+              console.log("************************************")
+
+              var nodeLinks = myDiagram.findLinksByExample(node);
+              console.log(nodeLinks)
+              console.log("-----------------------")
+//              myDiagram.startTransaction("select path");
+//              var links = node.findLinksConnected();
+//              while (links.next())
+//              {
+//                links.value.path.stroke = "lightblue";
+//              }
+//              myDiagram.commitTransaction("select path");
+
+            }
+
+          }
+        });
+
+      }
+      function tikaTest() {
+//        // all model changes should happen in a transaction
+//        myDiagram.startTransaction("shift node");
+//        var data = myDiagram.model.nodeDataArray[0];  // get the first node data
+//        var node = myDiagram.findNodeForData(data);   // find the corresponding Node
+//        var p = node.location.copy();  // make a copy of the location, a Point
+//        p.x += 10;
+//        if (p.x > 200)
+//          p.x = 0;
+//        // changing the Node.location also changes the data.loc property due to TwoWay binding
+//        node.location = p;
+//
+//        //        node.setProperties({
+//        //          background: "red",
+//        //        });
+//        myDiagram.model.setDataProperty(data, "highlight", !data.highlight);
+//        // show the updated location held by the "loc" property of the node data
+//        myDiagram.commitTransaction("shift node");
+//        myDiagram.select(myDiagram.findLinkForData(myDiagram.model.linkDataArray[0]));
+
+
+//        for (var it = myDiagram.nodes.iterator; it.next(); ) {
+//          var part = it.value; // part is now a Node or a Group or a Link or maybe a simple Part
+//          if (part instanceof go.Node) {
+//            myDiagram.select(part)
+//            myDiagram.select(myDiagram.findLinkForData(part));
+//          }
+//          else if (part instanceof go.Link) {
+//
+//          }
+//        }
+
+        console.log(myDiagram.nodes.lentgh)
+      }
 
       // Make all ports on a node visible when the mouse is over the node
       function showPorts(node, show) {
@@ -317,25 +330,13 @@
         });
       }
 
-
-      // add an SVG rendering of the diagram at the end of this page
-//      function makeSVG() {
-//        var svg = myDiagram.makeSvg({
-//          scale: 0.5
-//        });
-//        svg.style.border = "1px solid black";
-//        obj = document.getElementById("SVGArea");
-//        obj.appendChild(svg);
-//        if (obj.children.length > 0) {
-//          obj.replaceChild(svg, obj.children[0]);
-//        }
-//      }
       /**
        * Adapt intput JSON workflow to GoJS data format.
        * @returns {undefined}
        */
       function parseJSON(inputData) {
-
+        //TODO: @jfigueruela: Here in future parse backend input workflow object to GoJS workflow model object.
+        return inputData;
       }
       return factory;
     }

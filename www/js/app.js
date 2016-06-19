@@ -8,7 +8,7 @@
  */
 (function () {
   define([
-    'angular', 'uiRouter', 'ngSanitize', 'ngAnimate', 'd3', 'ngD3plus', 'gojs',
+    'angular', 'uiRouter', 'ngSanitize', 'ngAnimate',
     // Here application modules index files references for RequireJS.
     './modules/main',
     './core/main'

@@ -10,7 +10,8 @@
 (function () {
 
   define([
-    'angular'
+    'angular',
+    'd3', 'ngD3plus'
   ], function (ng) {
     'use strict';
 

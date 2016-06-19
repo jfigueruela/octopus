@@ -6,58 +6,62 @@
 
 // var configDev = require('./configs/config_dev.json');
 // var config = require('./configs/config.json');
-var gulp = require('gulp'), sass = require('gulp-ruby-sass'), autoprefixer = require('gulp-autoprefixer'), minifycss = require('gulp-minify-css'), jshint = require('gulp-jshint'), uglify = require('gulp-uglify'), imagemin = require('gulp-imagemin'), rename = require('gulp-rename'), concat = require('gulp-concat'), cache = require('gulp-cache'), livereload = require('gulp-livereload'), browserSync = require('browser-sync'), gutil = require('gulp-util'), del = require('del'), imagemin = require('gulp-imagemin'), pngquant = require('imagemin-pngquant');
+var gulp = require('gulp'), sass = require('gulp-ruby-sass'), autoprefixer = require('gulp-autoprefixer'), minifycss =
+  require('gulp-minify-css'), jshint = require('gulp-jshint'), uglify = require('gulp-uglify'), imagemin = require(
+  'gulp-imagemin'), rename = require('gulp-rename'), concat = require('gulp-concat'), cache = require(
+  'gulp-cache'), livereload = require('gulp-livereload'), browserSync = require('browser-sync'), gutil = require(
+  'gulp-util'), del = require('del'), imagemin = require('gulp-imagemin'), pngquant = require('imagemin-pngquant');
 
 gulp
-    .task(
-        'default',
-        function() {
-          console.log('\n');
-          console.log('\n');
-          console.log(gutil.colors.bgCyan.bold.underline('Octopus'));
-          console.log(gutil.colors.green('------------------------'));
-          console.log(gutil.colors.green('| '
-              + gutil.colors.yellow('Hello Percutor Team!')
-              + gutil.colors.green(' |')));
-          console.log(gutil.colors.green('------------------------'));
-          console.log(gutil.colors.green('Tasks supported:'));
-          console
-              .log(gutil.colors
-                  .green('-----------------------------------------------------------------------------'));
-          console.log(' -> ' + gutil.colors.blue('sass')
-              + ': Compile SASS files and copy to destination file.');
-          console.log(' -> ' + gutil.colors.blue('sass:watch')
-              + ': Keep watcher to recompile SASS when some file changes.');
-          console.log(' -> ' + gutil.colors.blue('copyExternalJSLibs')
-              + ': Copy external JS libs to DIST folder.');
-          console.log(' -> ' + gutil.colors.blue('copyExternalCSS')
-              + ': Copy external CSS to DIST folder.');
-          console.log(' -> ' + gutil.colors.blue('copyExternalFonts')
-              + ': Copy external Fonts to DIST folder.');
-          console.log(' -> ' + gutil.colors.blue('minimize')
-              + ': Minimize and compress Sass files into Css min.');
-          console.log(' -> ' + gutil.colors.blue('compressExternalJSLibs')
-              + ': Copy and compress libs into external folder.');
-          console.log(' -> ' + gutil.colors.blue('cleanExternalJSLibs')
-              + ': Remove from file system folder all external JS libs.');
-          console.log(' -> ' + gutil.colors.blue('minimizeImages')
-              + ': Minimize compress images into dist folder.');
-          console.log(' -> ' + gutil.colors.blue('remove:dist')
-              + ': Remove from file system dist folder.');
-          console.log(' -> ' + gutil.colors.blue('build:dev')
-              + ': Initialize all external dependencies.');
-          console.log(' -> ' + gutil.colors.blue('build:dist')
-              + ': Build distribution version.');
-          console
-              .log(' -> '
-                  + gutil.colors.blue('deploy')
-                  + ': Deploy files to main project. (run build:dist before if it is necessary.)');
-          console.log(' -> ' + gutil.colors.blue('serve')
-              + ': Start Dev Server.');
-          console
-              .log(gutil.colors
-                  .green('-----------------------------------------------------------------------------'));
-        });
+  .task(
+    'default',
+    function () {
+      console.log('\n');
+      console.log('\n');
+      console.log(gutil.colors.bgCyan.bold.underline('Octopus'));
+      console.log(gutil.colors.green('------------------------'));
+      console.log(gutil.colors.green('| '
+        + gutil.colors.yellow('Hello Percutor Team!')
+        + gutil.colors.green(' |')));
+      console.log(gutil.colors.green('------------------------'));
+      console.log(gutil.colors.green('Tasks supported:'));
+      console
+        .log(gutil.colors
+          .green('-----------------------------------------------------------------------------'));
+      console.log(' -> ' + gutil.colors.blue('sass')
+        + ': Compile SASS files and copy to destination file.');
+      console.log(' -> ' + gutil.colors.blue('sass:watch')
+        + ': Keep watcher to recompile SASS when some file changes.');
+      console.log(' -> ' + gutil.colors.blue('copyExternalJSLibs')
+        + ': Copy external JS libs to DIST folder.');
+      console.log(' -> ' + gutil.colors.blue('copyExternalCSS')
+        + ': Copy external CSS to DIST folder.');
+      console.log(' -> ' + gutil.colors.blue('copyExternalFonts')
+        + ': Copy external Fonts to DIST folder.');
+      console.log(' -> ' + gutil.colors.blue('minimize')
+        + ': Minimize and compress Sass files into Css min.');
+      console.log(' -> ' + gutil.colors.blue('compressExternalJSLibs')
+        + ': Copy and compress libs into external folder.');
+      console.log(' -> ' + gutil.colors.blue('cleanExternalJSLibs')
+        + ': Remove from file system folder all external JS libs.');
+      console.log(' -> ' + gutil.colors.blue('minimizeImages')
+        + ': Minimize compress images into dist folder.');
+      console.log(' -> ' + gutil.colors.blue('remove:dist')
+        + ': Remove from file system dist folder.');
+      console.log(' -> ' + gutil.colors.blue('build:dev')
+        + ': Initialize all external dependencies.');
+      console.log(' -> ' + gutil.colors.blue('build:dist')
+        + ': Build distribution version.');
+      console
+        .log(' -> '
+          + gutil.colors.blue('deploy')
+          + ': Deploy files to main project. (run build:dist before if it is necessary.)');
+      console.log(' -> ' + gutil.colors.blue('serve')
+        + ': Start Dev Server.');
+      console
+        .log(gutil.colors
+          .green('-----------------------------------------------------------------------------'));
+    });
 /**
  * Supported Gulp tasks.
  */
@@ -68,13 +72,13 @@ gulp.task('help', [
 /**
  * Compile Sass files and copy to destination file.
  */
-gulp.task('sass', function() {
+gulp.task('sass', function () {
   return sass([
     './sass/*.scss'
   ], {
-    style : 'expanded'
+    style: 'expanded'
   }).pipe(autoprefixer('last 2 version')).pipe(
-      gulp.dest('webapp/resources/css')).on('end', function() {
+    gulp.dest('webapp/resources/css')).on('end', function () {
     console.log(gutil.colors.green('Sass task complete.'))
   })
 });
@@ -82,13 +86,13 @@ gulp.task('sass', function() {
 /**
  * Minimize and compress Sass files into Css min.
  */
-gulp.task('minimize', function() {
+gulp.task('minimize', function () {
   return sass([
     './sass/*.scss'
   ], {
-    style : 'compress'
+    style: 'compress'
   }).pipe(rename({
-    suffix : '.min'
+    suffix: '.min'
   })).pipe(minifycss()).pipe(gulp.dest('www/css'));
 });
 
@@ -96,23 +100,23 @@ gulp.task('minimize', function() {
  * Start Dev Server.
  */
 gulp.task('serve', [
-    'sass:watch'
-], function() {
+  'sass:watch'
+], function () {
   browserSync.init([
-      './www/css/*.css', './www/**/*.js'
+    './www/css/*.css', './www/**/*.js'
   ], {
-    server : {
-      baseDir : "www",
-      index : "index.html"
+    server: {
+      baseDir: "www",
+      index: "index.html"
     },
-    watchTask : true
+    watchTask: true
   });
 });
 
 /**
  * Keep watcher to recompile SASS when some file changes.
  */
-gulp.task('sass:watch', function() {
+gulp.task('sass:watch', function () {
   gulp.watch('sass/**/*.scss', [
     'sass'
   ]);

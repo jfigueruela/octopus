@@ -10,7 +10,8 @@
 (function () {
 
   define([
-    'angular'
+    'angular',
+    'gojs',
   ], function (ng) {
     'use strict';
 
