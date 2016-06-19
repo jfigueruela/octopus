@@ -22,11 +22,9 @@
       factory.load = load;
       factory.exportWorkFlow = exportWorkFlow;
       factory.renderTransactionInWorkFlow = renderTransactionInWorkFlow;
-      factory.tikaTest = tikaTest;
-      function init(containerId) {
+      factory.cleanTransaction = cleanTransaction;
 
-        if (window.goSamples)
-          goSamples(); // init for these samples -- you don't need to call this
+      function init(containerId) {
         var $ = go.GraphObject.make; // for conciseness in defining templates
         myDiagram =
           $(go.Diagram, containerId, // must name or refer to the DIV HTML element
@@ -40,24 +38,8 @@
             });
         // when the document is modified, add a "*" to the title and enable the "Save" button
         myDiagram.addDiagramListener("Modified", function (e) {
-          var button = document.getElementById("SaveButton");
-          if (button)
-            button.disabled =
-              !myDiagram.isModified;
-          var idx = document.title.indexOf("*");
-          if (myDiagram.isModified) {
-            if (idx < 0)
-              document.title +=
-                "*";
-          } else {
-            if (idx >= 0)
-              document.title =
-                document.title.substr(
-                  0,
-                  idx);
-          }
+          //HERE ask for modified diagram.
         });
-        // helper definitions for node templates
 
         function nodeStyle() {
           return [
@@ -69,8 +51,8 @@
             {
               // the Node.location is at the center of each node
               locationSpot: go.Spot.Center,
-              //isShadowed: true,
-              //shadowColor: "#888",
+              isShadowed: true,
+              shadowColor: "black",
               // handle mouse enter/leave events to show/hide the ports
               mouseEnter: function (e, obj) {
                 showPorts(
@@ -114,7 +96,10 @@
             $(go.Panel, "Auto",
               $(go.Shape, "Rectangle",
                 {fill: "#00A9C9", stroke: null},
-              new go.Binding("figure", "figure")),
+              new go.Binding("stroke", "highlight", function (v) {
+                return v ? "red" : "blue";
+              }),
+                new go.Binding("figure", "figure")),
               $(go.TextBlock,
                 {
                   font: "bold 11pt Helvetica, Arial, sans-serif",
@@ -169,59 +154,57 @@
                 margin: 5,
                 maxSize: new go.Size(200, NaN),
                 wrap: go.TextBlock.WrapFit,
-                textAlign: "center",
-                editable: true,
+                textAlign: "center", editable: true,
                 font: "bold 12pt Helvetica, Arial, sans-serif",
                 stroke: '#454545'
               },
             new go.Binding("text").makeTwoWay())
             // no ports, because no links are allowed to connect with a comment
             ));
-        // replace the default Link template in the linkTemplateMap
-        myDiagram.linkTemplate =
-          $(go.Link, // the whole link panel
-            {
-              routing: go.Link.AvoidsNodes,
-              curve: go.Link.JumpOver,
-              corner: 5, toShortLength: 4,
-              relinkableFrom: true,
-              relinkableTo: true,
-              reshapable: true,
-              resegmentable: true,
-              // mouse-overs subtly highlight links:
-              mouseEnter: function (e, link) {
-                link.findObject(
-                  "HIGHLIGHT").stroke =
-                  "rgba(30,144,255,0.2)";
-              },
-              mouseLeave: function (e, link) {
-                link.findObject(
-                  "HIGHLIGHT").stroke =
-                  "transparent";
-              }
+        // replace the default Link template in the linkTemplateMap         myDiagram.linkTemplate =
+        $(go.Link, // the whole link panel
+          {
+            routing: go.Link.AvoidsNodes,
+            curve: go.Link.JumpOver,
+            corner: 5, toShortLength: 4,
+            relinkableFrom: true,
+            relinkableTo: true,
+            reshapable: true,
+            resegmentable: true,
+            // mouse-overs subtly highlight links:
+            mouseEnter: function (e, link) {
+              link.findObject(
+                "HIGHLIGHT").stroke =
+                "rgba(30,144,255,0.2)";
             },
-          new go.Binding("points").makeTwoWay(),
-            $(go.Shape, // the highlight shape, normally transparent
-              {isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT"}),
-            $(go.Shape, // the link path shape
-              {isPanelMain: true, stroke: "gray", strokeWidth: 2}),
-            $(go.Shape, // the arrowhead
-              {toArrow: "standard", stroke: null, fill: "gray"}),
-            $(go.Panel, "Auto", // the link label, normally not visible
-              {visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
-            new go.Binding("visible", "visible").makeTwoWay(),
-              $(go.Shape, "RoundedRectangle", // the label shape
-                {fill: "#F8F8F8", stroke: null}),
-              $(go.TextBlock, "Yes", // the label
-                {
-                  textAlign: "center",
-                  font: "10pt helvetica, arial, sans-serif",
-                  stroke: "#333333",
-                  editable: true
-                },
-              new go.Binding("text").makeTwoWay())
-              )
-            );
+            mouseLeave: function (e, link) {
+              link.findObject(
+                "HIGHLIGHT").stroke =
+                "transparent";
+            }
+          },
+        new go.Binding("points").makeTwoWay(),
+          $(go.Shape, // the highlight shape, normally transparent
+            {isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT"}),
+          $(go.Shape, // the link path shape
+            {isPanelMain: true, stroke: "gray", strokeWidth: 2}),
+          $(go.Shape, // the arrowhead
+            {toArrow: "standard", stroke: null, fill: "gray"}),
+          $(go.Panel, "Auto", // the link label, normally not visible
+            {visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
+          new go.Binding("visible", "visible").makeTwoWay(),
+            $(go.Shape, "RoundedRectangle", // the label shape
+              {fill: "#F8F8F8", stroke: null}),
+            $(go.TextBlock, "Yes", // the label
+              {
+                textAlign: "center",
+                font: "10pt helvetica, arial, sans-serif",
+                stroke: "#333333",
+                editable: true
+              },
+            new go.Binding("text").makeTwoWay())
+            )
+          );
         // Make link labels visible if coming out of a "conditional" node.
         // This listener is called by the "LinkDrawn" and "LinkRelinked" DiagramEvents.
         function showLinkLabel(e) {
@@ -235,7 +218,7 @@
         // temporary links used by LinkingTool and RelinkingTool are also orthogonal:
         myDiagram.toolManager.linkingTool.temporaryLink.routing = go.Link.Orthogonal;
         myDiagram.toolManager.relinkingTool.temporaryLink.routing = go.Link.Orthogonal;
-//        load();  // load an initial diagram from some JSON text
+        //        load();  // load an initial diagram from some JSON text
 
         // initialize the Palette that is on the left side of the page
         $(go.Palette, "myPaletteDiv", // must name or refer to the DIV HTML element
@@ -260,67 +243,84 @@
         return myDiagram.model.toJson();
       }
 
+      /**
+       * Render intput transaction.
+       * @param {type} transaction
+       * @returns ligth transaction result JSON object.
+       */
       function renderTransactionInWorkFlow(transaction) {
+        var nodesInPath = [];
+
+        cleanTransaction();
+
         angular.forEach(transaction.steps, function (step) {
           for (var it = myDiagram.nodes.iterator; it.next(); ) {
             var node = it.value;
             if (step.toLowerCase() === node.data.text.toLowerCase()) {
-              console.log(node)
-              console.log("************************************")
-
-              var nodeLinks = myDiagram.findLinksByExample(node);
-              console.log(nodeLinks)
-              console.log("-----------------------")
-//              myDiagram.startTransaction("select path");
-//              var links = node.findLinksConnected();
-//              while (links.next())
-//              {
-//                links.value.path.stroke = "lightblue";
-//              }
-//              myDiagram.commitTransaction("select path");
-
+              nodesInPath.push(node);
+              markNode(node, getTransactionColor(transaction.status));
             }
-
           }
         });
+        //Here select links between nodes.
 
-      }
-      function tikaTest() {
-//        // all model changes should happen in a transaction
-//        myDiagram.startTransaction("shift node");
-//        var data = myDiagram.model.nodeDataArray[0];  // get the first node data
-//        var node = myDiagram.findNodeForData(data);   // find the corresponding Node
-//        var p = node.location.copy();  // make a copy of the location, a Point
-//        p.x += 10;
-//        if (p.x > 200)
-//          p.x = 0;
-//        // changing the Node.location also changes the data.loc property due to TwoWay binding
-//        node.location = p;
-//
-//        //        node.setProperties({
-//        //          background: "red",
-//        //        });
-//        myDiagram.model.setDataProperty(data, "highlight", !data.highlight);
-//        // show the updated location held by the "loc" property of the node data
-//        myDiagram.commitTransaction("shift node");
-//        myDiagram.select(myDiagram.findLinkForData(myDiagram.model.linkDataArray[0]));
-
-
-//        for (var it = myDiagram.nodes.iterator; it.next(); ) {
-//          var part = it.value; // part is now a Node or a Group or a Link or maybe a simple Part
-//          if (part instanceof go.Node) {
-//            myDiagram.select(part)
-//            myDiagram.select(myDiagram.findLinkForData(part));
-//          }
-//          else if (part instanceof go.Link) {
-//
-//          }
-//        }
-
-        console.log(myDiagram.nodes.lentgh)
+        return {status: transaction.status, message: transaction.message}
       }
 
-      // Make all ports on a node visible when the mouse is over the node
+      /**
+       * Reset transaction visual status.
+       * @returns {undefined}
+       */
+      function cleanTransaction() {
+        myDiagram.clearSelection();
+        for (var it = myDiagram.nodes.iterator; it.next(); ) {
+          var node = it.value;
+          markNode(node, getTransactionColor());
+        }
+      }
+
+      /**
+       * Highlight selected node.
+       * @param {type} node
+       * @param {type} color
+       * @returns {undefined}
+       */
+      function markNode(node, color) {
+        myDiagram.startTransaction("shift node");
+        node.setProperties({
+          shadowColor: color,
+        });
+        myDiagram.commitTransaction("shift node");
+      }
+
+      /**
+       * Obtains transaction color based in transaction result.
+       * @param {type} transactionStatus
+       * @returns {String} */
+      function getTransactionColor(transactionStatus) {
+        var resultColor = 'transparent';
+        switch (transactionStatus) {
+          case 'SUCCESS' :
+            resultColor = 'green';
+            break;
+          case 'ERROR' :
+            resultColor = 'red';
+            break;
+          case 'FAIL' :
+            resultColor = 'black';
+            break;
+          case 'PENDING':
+            resultColor = 'orange';
+        }
+        return resultColor;
+      }
+
+      /**
+       * Show/hide node connectors.
+       * @param {type} node
+       * @param {type} show
+       * @returns {undefined}
+       */
       function showPorts(node, show) {
         var diagram = node.diagram;
         if (!diagram || diagram.isReadOnly || !diagram.allowLink)
@@ -338,6 +338,7 @@
         //TODO: @jfigueruela: Here in future parse backend input workflow object to GoJS workflow model object.
         return inputData;
       }
+
       return factory;
     }
   });

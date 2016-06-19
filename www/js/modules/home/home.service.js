@@ -79,6 +79,23 @@
         mockTransactionsArray.push({"amount": "45", "message": "wrong card number", "status": "ERROR",
           "currency": "EUR", "country": "GB", "steps": ["start", "B1", "B2", "D1", "B4", "end"]});
 
+
+        mockTransactionsArray.push({"amount": "76", "message": "wrong configuration", "status": "FAIL",
+          "currency": "GBP",
+          "country": "GB", "steps": ["start", "b1", "b2"]});
+
+        mockTransactionsArray.push({"amount": "5445", "message": "OK", "status": "SUCCESS", "currency": "EUR",
+          "country":
+            "GB", "steps"
+            : ["start", "b1", "b2", "d1", "b4", "end"]});
+
+        mockTransactionsArray.push({"amount": "55", "message": "Invalid Account", "status": "ERROR", "currency": "EUR",
+          "country": "GB", "steps": ["start", "b1", "b2", "d1", "b4", "end"]});
+
+        mockTransactionsArray.push({"amount": "76", "message": "in progress ...", "status": "PENDING",
+          "currency": "GBP",
+          "country"
+            : "GB", "steps": ["start", "b1"]});
         return mockTransactionsArray;
 
       }

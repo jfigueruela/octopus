@@ -22,10 +22,10 @@
       vm.loadWorkFlow = loadWorkFlow;
       vm.exportWorkFlow = exportWorkFlow;
       vm.renderTransaction = renderTransaction;
-      vm.tikaTest = tikaTest;
+      vm.cleanTransaction = cleanTransaction;
       // Controller Public attibutes.
       vm.workFlowJSON;
-
+      vm.transactionResult = null;
       activate();
       /**
        * Controller activation.
@@ -58,11 +58,12 @@
        * @returns {undefined}
        */
       function renderTransaction(transaction) {
-        GoFactory.renderTransactionInWorkFlow(transaction);
+        vm.transactionResult = GoFactory.renderTransactionInWorkFlow(transaction);
       }
 
-      function tikaTest() {
-        GoFactory.tikaTest();
+      function cleanTransaction() {
+        GoFactory.cleanTransaction();
+        vm.transactionResult = null;
       }
     }
   });
