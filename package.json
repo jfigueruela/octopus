@@ -29,5 +29,10 @@
     "gulp-util": "^3.0.7",
     "imagemin-pngquant": "^5.0.0",
     "jshint": "^2.9.2"
+  },
+  "devDependencies": {
+    "gulp-clean": "^0.3.2",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-sass": "^2.3.2"
   }
 }

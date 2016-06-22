@@ -36,15 +36,15 @@
 //        }
 //        return mockWorkflow;
 
-        return 	{"class": "go.GraphLinksModel",
+        return 		{"class": "go.GraphLinksModel",
           "nodeDataArray": [
             {"category": "Start", "text": "Start", "key": -1, "loc": "-86 -319"},
-            {"text": "B1", "key": -2, "loc": "-86 -233"},
-            {"text": "B2", "key": -3, "loc": "-86 -150"},
-            {"text": "D1", "figure": "Diamond", "key": -4, "loc": "-86 -57"},
-            {"text": "B3", "key": -5, "loc": "-218 43"},
-            {"text": "B4", "key": -6, "loc": "35 41"},
-            {"category": "End", "text": "End", "key": -7, "loc": "-85 218"}
+            {"text": "B1", "key": -2, "loc": "-84.00000000000004 -251.9999999999998"},
+            {"text": "B2", "key": -3, "loc": "-83.00000000000004 -191"},
+            {"text": "D1", "figure": "Diamond", "key": -4, "loc": "-83.00000000000003 -117.00000000000004"},
+            {"text": "B3", "key": -5, "loc": "-174.99999999999994 -102.00000000000001"},
+            {"text": "B4", "key": -6, "loc": "7 -99.00000000000001"},
+            {"category": "End", "text": "End", "key": -7, "loc": "-81.99999999999996 -18.999999999999886"}
           ],
           "linkDataArray": [
             {"from": -1, "to": -2, "points": [-86, -294.23282552319904, -86, -284.23282552319904, -86,

@@ -1,0 +1,17 @@
+.home-container-top {
+  width:100%;
+  white-space:nowrap;
+
+  .section {
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+    width:100px;
+
+    .block {
+      border: solid 1px gray;
+      height: 450px;
+    }
+
+  }
+}

@@ -1,16 +1,16 @@
-<div style="width:100%; white-space:nowrap;">
-	<span style="display: inline-block; vertical-align: top; padding: 5px; width:100px">
-		<div id="myPaletteDiv" style="border: solid 1px gray; height: 720px"></div>
+<div class="home-container-top">
+	<span class="section" style="width:100px">
+		<div id="myPaletteDiv" class="block"></div>
 	</span>
 
-	<span style="display: inline-block; vertical-align: top; padding: 5px; width:70%">
-		<div id="myDiagramDiv" style="border: solid 1px gray; height: 720px"></div>
+	<span class="section" style="width:70%">
+		<div id="myDiagramDiv" class="block"></div>
 	</span>
 
-	<span style="display: inline-block; vertical-align: top; padding: 5px; width:20%">
-		<div id="myTransactions" style="border: solid 1px gray; height: 720px">
+	<span class="section" style="width:20%">
+		<div id="myTransactions" class="block">
 
-			<div ng-repeat="transaction in homeCtrl.transactions" style="border: solid 1px gray"
+			<div ng-repeat="transaction in homeCtrl.transactions"
 					 ng-click="homeCtrl.renderTransaction(transaction)">{{transaction.amount}} {{transaction.currency}}-{{transaction.country}}</div>
 
 
@@ -23,6 +23,7 @@
 <button type="button" ng-click="homeCtrl.cleanTransaction()">Clear transaction</button>
 
 <span ng-if="homeCtrl.transactionResult">Transaction status: {{homeCtrl.transactionResult.status}} Message: {{homeCtrl.transactionResult.message}}</span>
+
 <textarea style="width:100%;height:300px">
 	{{homeCtrl.workFlowJSON}}
 </textarea>
