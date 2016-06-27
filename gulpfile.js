@@ -49,7 +49,7 @@ gulp.task('clean-css', [], function () {
  * Start Dev Server.
  */
 gulp.task('serve', [
-  'sass:watch',
+  'sass', 'sass:watch',
 ], function () {
   browserSync.init([
     paths.destCss, paths.devJS, paths.devHTML
